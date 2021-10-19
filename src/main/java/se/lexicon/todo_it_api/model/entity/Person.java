@@ -32,6 +32,12 @@ public class Person {
     )
     private List<TodoItem> todoItems;
 
+    public Person(String firstName, String lastName, LocalDate birthDate) {
+    }
+
+    public <E> Person(String firstName, String lastName, LocalDate birthDate, ArrayList<E> es) {
+    }
+
     public void setTodoItems(List<TodoItem> todoItems){
         if(todoItems == null) todoItems = new ArrayList<>();
         if(todoItems.isEmpty()){
