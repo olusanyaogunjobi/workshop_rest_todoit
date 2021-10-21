@@ -2,6 +2,10 @@ package se.lexicon.todo_it_api.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import se.lexicon.todo_it_api.DTO.PersonDTO;
 import se.lexicon.todo_it_api.data.PersonDAO;
 import se.lexicon.todo_it_api.data.TodoItemDAO;
@@ -10,6 +14,7 @@ import se.lexicon.todo_it_api.form.PersonFormDTO;
 import se.lexicon.todo_it_api.model.entity.Person;
 import se.lexicon.todo_it_api.model.entity.TodoItem;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

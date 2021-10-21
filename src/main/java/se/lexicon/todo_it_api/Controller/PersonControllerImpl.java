@@ -4,28 +4,54 @@ import org.springframework.http.ResponseEntity;
 import se.lexicon.todo_it_api.DTO.PersonDTO;
 import se.lexicon.todo_it_api.DTO.TodoItemDTO;
 import se.lexicon.todo_it_api.form.PersonFormDTO;
+import se.lexicon.todo_it_api.service.PersonService;
+import se.lexicon.todo_it_api.service.TodoItemService;
 
+import javax.persistence.Id;
+import javax.validation.Valid;
 import java.util.Collection;
+import java.util.Locale;
 
 public class PersonControllerImpl implements PersonController{
+
+    private  final PersonService personService;
+    private final TodoItemService todoItemService;
+
+    @Autowired
+    public PersonControllerImpl(PersonService personService, TodoItemService todoItemService) {
+        this.personService = personService;
+        this.todoItemService = todoItemService;
+    }
+
     @Override
     public ResponseEntity<PersonDTO> assignTodoItem(Integer personId, Integer todoItemId) {
-        return null;
+        return ResponseEntity.ok(personService.addTodoItem(personId, todoItemId));
     }
 
     @Override
-    public ResponseEntity<PersonDTO> create(PersonFormDTO personForm) {
-        return null;
+    public ResponseEntity<PersonDTO> create(@RequestBody @Valid PersonFormDTO personForm) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(personService.create(personForm));
     }
 
     @Override
-    public ResponseEntity<String> deletePerson(String personId) {
-        return null;
+    public ResponseEntity<String> deletePerson(Integer personId) {
+
+        boolean delete = personService.delete(personId);
+
+        return ResponseEntity.ok(delete? "person was deleted": "Person was not deleted");
     }
 
     @Override
-    public ResponseEntity<?> find(String personId) {
-        return null;
+    public ResponseEntity<?> find(String search) {
+
+        switch (search.toLowerCase()){
+
+            case "idle": return findIdlePeople();
+            case "all": return findAll();
+
+            default: throw new IllegalArgumentException("Invalid search Param: valid Params Are: all, idle");
+        }
+
     }
 
     @Override
@@ -35,26 +61,29 @@ public class PersonControllerImpl implements PersonController{
 
     @Override
     public ResponseEntity<PersonDTO> findById(Integer personId) {
-        return null;
+
+        return ResponseEntity.ok(personService.findById(personId));
+
     }
 
     @Override
     public ResponseEntity<Collection<PersonDTO>> findIdlePeople() {
-        return null;
+        return ResponseEntity.ok(personService.findIdlePeople());
     }
 
     @Override
-    public ResponseEntity<Collection<TodoItemDTO>> getTodoItems(Integer todoItemId) {
-        return null;
+    public ResponseEntity<Collection<TodoItemDTO>> getTodoItems(Integer personId) {
+        return ResponseEntity.ok().body(todoItemService.findAllByPersonId(personId));
     }
 
     @Override
-    public ResponseEntity<PersonDTO> removeTodoItem(Integer personId, Integer todoItemId) {
-        return null;
+    public ResponseEntity<PersonDTO> removeTodoItem(Integer personId,  Integer todoItemId) {
+
+        return ResponseEntity.ok(personService.removeTodoItem(personId, todoItemId));
     }
 
     @Override
     public ResponseEntity<PersonDTO> update(Integer personId, PersonFormDTO personForm) {
-        return null;
+        return ResponseEntity.ok(personService.update(personId, personForm));
     }
 }
