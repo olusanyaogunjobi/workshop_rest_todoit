@@ -18,7 +18,7 @@ public interface TodoItemService {
     List<TodoItemDTO> findAllUnfinishedAndOverdue();
     List<TodoItemDTO> findDeadlineAfter(LocalDate deadline);
     List<TodoItemDTO> findDeadlineBefore(LocalDate deadline);
-    List<TodoItemDTO> findBetween(LocalDate localDate);
+    List<TodoItemDTO> findBetween(LocalDate start, LocalDate end);
     List<TodoItemDTO> findByDoneStatus(Boolean isDone);
     TodoItemDTO findById(Integer todoId);
     List<TodoItemDTO> findByTitle(String title);

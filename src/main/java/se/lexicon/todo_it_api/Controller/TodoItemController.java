@@ -18,7 +18,7 @@ public interface TodoItemController {
     ResponseEntity<String> delete(@PathVariable("Id")Integer todoItemId);
 
     @GetMapping("/todo/api/v1/todoItem/")
-    ResponseEntity<Collection<TodoItemDTO>> find( String String[]);
+    ResponseEntity<Collection<TodoItemDTO>> find( String search, String[] values);
 
     @GetMapping("/todo/api/v1/todoItem/{Id}")
     ResponseEntity<TodoItemDTO> findById(@PathVariable("Id") Integer todoItemId);

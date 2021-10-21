@@ -61,7 +61,6 @@ public class TodoItemServiceImpl implements TodoItemService{
     public List<TodoItemDTO> findAllByPersonId(Integer personId) {
 
 
-
         return null;
     }
 
@@ -86,8 +85,13 @@ public class TodoItemServiceImpl implements TodoItemService{
     }
 
     @Override
-    public List<TodoItemDTO> findBetween(LocalDate localDate) {
-        return null;
+    public List<TodoItemDTO> findBetween(LocalDate start, LocalDate end) {
+
+        List<TodoItem> found = todoItemDAO.findByDeadlineBetween(start, end);
+
+        return found.stream()
+                .map((todoItem -> conversionService.toTodoItemDTO(todoItem)))
+                .collect(Collectors.toList());
     }
 
     @Override
