@@ -1,6 +1,10 @@
 package se.lexicon.todo_it_api.Controller;
 
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import se.lexicon.todo_it_api.DTO.PersonDTO;
 import se.lexicon.todo_it_api.DTO.TodoItemDTO;
 import se.lexicon.todo_it_api.form.PersonFormDTO;
@@ -12,6 +16,9 @@ import javax.validation.Valid;
 import java.util.Collection;
 import java.util.Locale;
 
+@RestController
+@RequestMapping(path = "/todo/api/v1/person")
+@CrossOrigin("*")
 public class PersonControllerImpl implements PersonController{
 
     private  final PersonService personService;
@@ -56,7 +63,8 @@ public class PersonControllerImpl implements PersonController{
 
     @Override
     public ResponseEntity<Collection<PersonDTO>> findAll() {
-        return null;
+
+        return ResponseEntity.status(HttpStatus.OK).body(personService.findAll());
     }
 
     @Override
